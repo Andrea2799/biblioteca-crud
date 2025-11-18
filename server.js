@@ -5,19 +5,10 @@ const path = require("path");
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(express.static("public")); // Render servirá esta carpeta correctamente
 
-// ⭐ Servir archivos estáticos desde /public (Render necesita path absoluto)
-app.use(express.static(path.join(__dirname, "public")));
-
-// =====================
-//   BASE DE DATOS LOCAL
-// =====================
 let libros = [];
 let idCounter = 1;
-
-// =====================
-//   CRUD
-// =====================
 
 // CREATE
 app.post("/api/libros", (req, res) => {
@@ -35,7 +26,6 @@ app.get("/api/libros", (req, res) => {
 app.put("/api/libros/:id", (req, res) => {
     const id = parseInt(req.params.id);
     const index = libros.findIndex(l => l.id === id);
-
     if (index >= 0) {
         libros[index] = { id, ...req.body };
         res.json(libros[index]);
@@ -51,9 +41,7 @@ app.delete("/api/libros/:id", (req, res) => {
     res.json({ mensaje: "Libro eliminado" });
 });
 
-// =====================
-//   INFORME XML
-// =====================
+// INFORME XML
 app.get("/api/xml", (req, res) => {
     const total = libros.length;
 
@@ -71,8 +59,9 @@ app.get("/api/xml", (req, res) => {
         xml += `    <genero nombre="${genero}" porcentaje="${porcentaje}"/>\n`;
     }
 
-    xml += `  </porcentajes>\n  <libros>\n`;
+    xml += `  </porcentajes>\n`;
 
+    xml += `  <libros>\n`;
     libros.forEach(l => {
         xml += `    <libro id="${l.id}">\n`;
         xml += `      <titulo>${l.titulo}</titulo>\n`;
@@ -82,22 +71,18 @@ app.get("/api/xml", (req, res) => {
         xml += `      <precio>${l.precio}</precio>\n`;
         xml += `    </libro>\n`;
     });
-
     xml += `  </libros>\n</biblioteca>`;
 
     res.header("Content-Type", "application/xml");
     res.send(xml);
 });
 
-// =====================
-//   SERVIR index.html
-// =====================
-app.get("*", (req, res) => {
+// ⭐ FIX CRÍTICO PARA RENDER (Node 22 rompe con '*')
+//    Ahora usamos '/*' que es válido en la nueva librería path-to-regexp
+app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// =====================
-//   PUERTO RENDER
-// =====================
+// ⭐ Puerto para Render
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log("Servidor corriendo en puerto: " + PORT));
+app.listen(PORT, () => console.log(`Servidor corriendo en puerto ${PORT}`));
