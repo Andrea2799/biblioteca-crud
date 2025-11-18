@@ -1,0 +1,51 @@
+body {
+    background: #eef2ff;
+    font-family: Arial;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-buttons button {
+    padding: 8px 15px;
+    border-radius: 8px;
+    border: none;
+}
+
+input {
+    display: block;
+    width: 100%;
+    margin: 6px 0;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+#btnAgregar {
+    margin-top: 10px;
+    padding: 10px;
+    background: #4a37f1;
+    color: white;
+    border: none;
+    border-radius: 8px;
+}
+
+ul li {
+    background: #f4f4ff;
+    margin-top: 5px;
+    padding: 10px;
+    border-radius: 8px;
+}

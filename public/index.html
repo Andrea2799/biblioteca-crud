@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Sistema de Biblioteca</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="container">
+
+    <header class="header">
+        <h1>📚 Sistema de Biblioteca</h1>
+        <div class="nav-buttons">
+            <button id="btnCrud">CRUD</button>
+            <button id="btnInforme">Informe XML</button>
+        </div>
+    </header>
+
+    <section id="crudSection">
+        <h2>Agregar Nuevo Libro</h2>
+
+        <input id="titulo" placeholder="Título *">
+        <input id="autor" placeholder="Autor *">
+        <input id="anio" placeholder="Año">
+        <input id="genero" placeholder="Género">
+        <input id="precio" placeholder="Precio">
+
+        <button id="btnAgregar">+ Agregar</button>
+
+        <h2>Lista de Libros</h2>
+        <ul id="listaLibros"></ul>
+    </section>
+
+    <section id="xmlSection" style="display:none;">
+        <h2>Informe XML</h2>
+        <pre id="xmlOutput"></pre>
+    </section>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
