@@ -1,3 +1,4 @@
+// server.js
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
@@ -5,29 +6,21 @@ const path = require("path");
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.static("public")); // Servir frontend
+app.use(express.static("public"));
 
-// Base de datos en memoria
 let libros = [];
 let idCounter = 1;
 
-// ========================
-// RUTAS CRUD
-// ========================
-
-// CREATE
 app.post("/api/libros", (req, res) => {
     const libro = { id: idCounter++, ...req.body };
     libros.push(libro);
     res.json(libro);
 });
 
-// READ
 app.get("/api/libros", (req, res) => {
     res.json(libros);
 });
 
-// UPDATE
 app.put("/api/libros/:id", (req, res) => {
     const id = parseInt(req.params.id);
     const index = libros.findIndex(l => l.id === id);
@@ -39,16 +32,12 @@ app.put("/api/libros/:id", (req, res) => {
     }
 });
 
-// DELETE
 app.delete("/api/libros/:id", (req, res) => {
     const id = parseInt(req.params.id);
     libros = libros.filter(l => l.id !== id);
     res.json({ mensaje: "Libro eliminado" });
 });
 
-// ========================
-// RUTA XML
-// ========================
 app.get("/api/xml", (req, res) => {
     const total = libros.length;
     const generoCount = {};
@@ -80,15 +69,9 @@ app.get("/api/xml", (req, res) => {
     res.send(xml);
 });
 
-// ========================
-// CATCH-ALL SPA (Render compatible con Node 24 y Express 5)
-// ========================
-app.use((req, res) => {
+app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// ========================
-// INICIAR SERVIDOR
-// ========================
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Servidor corriendo en puerto ${PORT}`));
