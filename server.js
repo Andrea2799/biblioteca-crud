@@ -81,8 +81,7 @@ app.get("/api/xml", (req, res) => {
 });
 
 // ========================
-// FIX PARA RENDER NODE 22
-// Ruta catch-all para SPA
+// RUTA CATCH-ALL PARA SPA (Render)
 // ========================
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
