@@ -81,9 +81,9 @@ app.get("/api/xml", (req, res) => {
 });
 
 // ========================
-// RUTA CATCH-ALL PARA SPA (Render)
+// CATCH-ALL SPA (Render compatible con Node 24 y Express 5)
 // ========================
-app.get("*", (req, res) => {
+app.use((req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
