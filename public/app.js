@@ -19,11 +19,13 @@ async function agregarLibro() {
         genero: genero.value,
         precio: precio.value
     };
+
     await fetch(API, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(libro)
     });
+
     cargarLibros();
 }
 
@@ -31,6 +33,7 @@ async function cargarLibros() {
     const res = await fetch(API);
     const data = await res.json();
     listaLibros.innerHTML = "";
+
     data.forEach(l => {
         const li = document.createElement("li");
         li.innerHTML = `<b>${l.titulo}</b> - ${l.autor} <button onclick="eliminar(${l.id})">Eliminar</button>`;
